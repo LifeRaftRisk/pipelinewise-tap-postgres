@@ -159,6 +159,8 @@ def selected_value_to_singer_value_impl(elem, sql_datatype):
             cleaned_elem = elem
         else:
             raise Exception(f"do not know how to marshall a dict if its not an hstore or json: {sql_datatype}")
+    elif 'range' in sql_datatype:
+        cleaned_elem = {'lower': elem.lower, 'upper': elem.upper, 'bounds': elem._bounds}
     else:
         raise Exception(
             f"do not know how to marshall value of class( {elem.__class__} ) and sql_datatype ( {sql_datatype} )")
